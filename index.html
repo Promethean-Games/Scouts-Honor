@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BillCheck – Quick Screen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      /* Light theme (default) */
+      --bg: #f3f4f6;
+      --bg-elevated: #ffffff;
+      --bg-elevated-soft: #f9fafb;
+      --bg-video: #000000;
+      --border-soft: rgba(148, 163, 184, 0.4);
+      --border-subtle: rgba(148, 163, 184, 0.25);
+      --text: #111827;
+      --text-muted: #6b7280;
+      --text-softer: #9ca3af;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.12);
+      --badge: #0284c7;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    body.theme-dark {
+      --bg: #0f172a;
+      --bg-elevated: #020617;
+      --bg-elevated-soft: #111827;
+      --bg-video: #000000;
+      --border-soft: rgba(148, 163, 184, 0.4);
+      --border-subtle: rgba(148, 163, 184, 0.2);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --text-softer: #9ca3af;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.18);
+      --badge: #38bdf8;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding: 0;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      background: var(--bg-elevated);
+      border-radius: 1rem;
+      padding: 1rem 1.25rem 1.5rem;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: auto;
+      transition: background 0.2s ease, color 0.2s ease, border-radius 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Fullscreen capture mode */
+    .app.scanning-full {
+      max-width: none;
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: none;
+      background: #000;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--badge);
+    }
+
+    header h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 0.8rem;
+      color: var(--text-softer);
+      line-height: 1.4;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      font-size: 0.7rem;
+      background: var(--bg-elevated-soft);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-softer);
+      padding: 0.25rem 0.55rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .lang-btn.active {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .section {
+      border-radius: 0.85rem;
+      background: var(--bg-elevated-soft);
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem 0.85rem;
+    }
+
+    .section h2 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .section p {
+      font-size: 0.8rem;
+      color: var(--text-softer);
+      line-height: 1.4;
+    }
+
+    .btn-row {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--accent);
+      color: #022c22;
+      transition: transform 0.08s ease, box-shadow 0.1s ease, background 0.12s ease;
+      box-shadow: 0 7px 18px var(--accent-soft);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    button.secondary {
+      background: var(--bg);
+      color: var(--text);
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      border: 1px solid var(--border-soft);
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .denom-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+
+    .denom-btn {
+      font-size: 0.75rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-elevated);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .denom-btn.active {
+      background: var(--accent);
+      color: #022c22;
+      border-color: var(--accent);
+    }
+
+    .tiny {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* Home / settings / scanner / results visibility */
+    #homeSection,
+    #settingsSection,
+    #scannerSection,
+    #checklistSection,
+    #resultsSection {
+      display: none;
+    }
+
+    #homeSection.active,
+    #settingsSection.active,
+    #scannerSection.active,
+    #checklistSection.active,
+    #resultsSection.active {
+      display: block;
+    }
+
+    /* Scanner layout */
+    .scanner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+    }
+
+    .video-wrapper {
+      position: relative;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-video);
+      flex: 1;
+    }
+
+    video, canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .frame-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .frame-box {
+      width: 92%;
+      aspect-ratio: 7 / 3;
+      border: 2px dashed rgba(248, 250, 252, 0.8);
+      border-radius: 0.6rem;
+      box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.35) inset;
+    }
+
+    .status-text {
+      font-size: 0.75rem;
+      color: var(--text-softer);
+      margin-top: 0.25rem;
+    }
+
+    .current-denom {
+      font-size: 0.75rem;
+      color: #4f46e5;
+      margin-top: 0.25rem;
+    }
+
+    /* Round capture button row */
+    .capture-row {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .round-capture {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 999px;
+      padding: 0;
+      font-size: 0.8rem;
+      box-shadow: 0 0 0 4px var(--accent-soft);
+      background: radial-gradient(circle at 30% 30%, #bbf7d0, var(--accent));
+    }
+
+    .capture-row button.secondary {
+      margin-left: 0.4rem;
+    }
+
+    /* Back button in scanner */
+    #scannerBackBtn {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.6rem;
+      z-index: 10;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.8rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.7);
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Checklist / results */
+    .checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .step-indicator {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-header {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .step-body {
+      font-size: 0.8rem;
+      color: var(--text-softer);
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+
+    .answer-btn {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .answer-btn.yes {
+      background: #22c55e;
+      color: #022c22;
+    }
+
+    .answer-btn.no {
+      background: #ef4444;
+      color: #fee2e2;
+    }
+
+    .answer-btn.maybe {
+      background: #eab308;
+      color: #422006;
+    }
+
+    .results {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .result-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .result-tag.ok {
+      background: rgba(22, 163, 74, 0.2);
+      color: #166534;
+      border: 1px solid rgba(22, 163, 74, 0.6);
+    }
+
+    .result-tag.warn {
+      background: rgba(234, 179, 8, 0.15);
+      color: #854d0e;
+      border: 1px solid rgba(234, 179, 8, 0.7);
+    }
+
+    .result-tag.bad {
+      background: rgba(239, 68, 68, 0.18);
+      color: #b91c1c;
+      border: 1px solid rgba(239, 68, 68, 0.7);
+    }
+
+    .result-note {
+      font-size: 0.8rem;
+      color: var(--text-softer);
+      line-height: 1.4;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-soft), transparent);
+      margin: 0.25rem 0;
+    }
+
+    /* Settings layout */
+    .settings-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.45rem;
+      padding-top: 0.35rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .settings-row label {
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+
+    .toggle-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      background: var(--bg);
+      font-size: 0.75rem;
+    }
+
+    .toggle-pill button {
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0.3rem 0.7rem;
+      background: transparent;
+      color: var(--text-softer);
+      border: none;
+    }
+
+    .toggle-pill button.active {
+      background: var(--accent-soft);
+      color: #065f46;
+    }
+
+    /* Fullscreen scanning-only view rules */
+    .app.scanning-full header,
+    .app.scanning-full #homeSection,
+    .app.scanning-full #settingsSection,
+    .app.scanning-full #checklistSection,
+    .app.scanning-full #resultsSection {
+      display: none !important;
+    }
+
+    .app.scanning-full #scannerSection {
+      display: block !important;
+      border-radius: 0;
+      border: none;
+      padding: 0;
+      background: #000;
+      height: 100%;
+    }
+
+    .app.scanning-full #scannerSection .scanner-inner {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app.scanning-full #scannerTitle,
+    .app.scanning-full #scannerBody,
+    .app.scanning-full #currentDenomText,
+    .app.scanning-full .status-text,
+    .app.scanning-full #retakeBtn,
+    .app.scanning-full #beginChecksBtn,
+    .app.scanning-full .tiny {
+      display: none !important;
+    }
+
+    .app.scanning-full .video-wrapper {
+      flex: 1;
+      border-radius: 0;
+      border: none;
+    }
+
+    .app.scanning-full video,
+    .app.scanning-full canvas {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
+
+    .app.scanning-full .frame-box {
+      border-color: rgba(248, 250, 252, 0.9);
+    }
+
+    .app.scanning-full .capture-row {
+      padding: 0.5rem 0 0.75rem;
+    }
+  </style>
+</head>
+<body class="theme-light">
+  <div class="app">
+    <header>
+      <div class="header-row">
+        <div>
+          <div class="badge" id="badgeText">Experimental tool</div>
+          <h1 id="appTitle">BillCheck – Quick Screen</h1>
+        </div>
+        <div class="lang-toggle" aria-label="Language">
+          <button class="lang-btn active" data-lang="en" id="langEn">EN</button>
+          <button class="lang-btn" data-lang="es" id="langEs">ES</button>
+        </div>
+      </div>
+      <p id="disclaimerText">
+        This is a <strong>preliminary helper only</strong>. It cannot guarantee authenticity.
+        When in doubt, have a bank or law enforcement verify the bill.
+      </p>
+    </header>
+
+    <!-- HOME -->
+    <section class="section" id="homeSection">
+      <h2 id="howWorksTitle">How this works</h2>
+      <p id="howWorksBody">
+        Choose a U.S. bill, then we’ll use your camera to capture it, highlight key areas,
+        and walk you through three quick checks.
+      </p>
+
+      <p class="tiny" id="denomLabel">
+        Supported today: U.S. bills
+      </p>
+      <div class="denom-row" id="denomRow">
+        <button class="denom-btn" data-denom="1">$1</button>
+        <button class="denom-btn" data-denom="5">$5</button>
+        <button class="denom-btn" data-denom="10">$10</button>
+        <button class="denom-btn active" data-denom="20">$20</button>
+        <button class="denom-btn" data-denom="50">$50</button>
+        <button class="denom-btn" data-denom="100">$100</button>
+      </div>
+      <p class="tiny" id="intlComingSoon">
+        International currencies: support coming soon.
+      </p>
+
+      <div class="btn-row">
+        <button id="startScanBtn">Start scan</button>
+        <button id="openSettingsBtn" class="secondary">Settings</button>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="section" id="settingsSection">
+      <h2 id="settingsTitle">Settings</h2>
+      <p id="settingsIntro">
+        Adjust language and theme. These settings apply across the app.
+      </p>
+
+      <div class="settings-row">
+        <label id="settingsLangLabel">Language</label>
+        <div class="toggle-pill">
+          <button type="button" id="settingsLangEn" class="active">English</button>
+          <button type="button" id="settingsLangEs">Español</button>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <label id="settingsThemeLabel">Theme</label>
+        <div class="toggle-pill">
+          <button type="button" id="themeLightBtn" class="active">Light</button>
+          <button type="button" id="themeDarkBtn">Dark</button>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:1rem;">
+        <button id="settingsBackBtn" class="secondary">Back to home</button>
+      </div>
+    </section>
+
+    <!-- SCANNER -->
+    <section class="section scanner" id="scannerSection">
+      <div class="scanner-inner">
+        <button id="scannerBackBtn">&#8592;</button>
+
+        <h2 id="scannerTitle">Align the bill</h2>
+        <p id="scannerBody">
+          Place the selected bill flat with decent light and align it inside the frame. Then tap
+          <strong>Capture</strong>.
+        </p>
+        <p class="current-denom" id="currentDenomText">
+          Currently checking: $20 (USD)
+        </p>
+
+        <div class="video-wrapper">
+          <video id="video" autoplay playsinline></video>
+          <canvas id="captureCanvas" style="display:none;"></canvas>
+          <div class="frame-overlay" id="frameOverlay">
+            <div class="frame-box"></div>
+          </div>
+        </div>
+
+        <div class="status-text" id="cameraStatus">
+          Opening camera…
+        </div>
+        <div class="btn-row capture-row">
+          <button id="captureBtn" class="round-capture">Capture</button>
+          <button id="retakeBtn" class="secondary" style="display:none;">Retake</button>
+          <button id="beginChecksBtn" class="secondary" style="display:none;">Begin checks</button>
+        </div>
+        <p class="tiny">
+          If the camera does not open, make sure you’re using a modern browser over HTTPS (or localhost)
+          and that camera permissions are granted.
+        </p>
+      </div>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section class="section checklist" id="checklistSection">
+      <div class="step-indicator" id="stepIndicator">Step 1 of 3</div>
+      <div class="step-header" id="stepTitle"></div>
+      <div class="step-body" id="stepBody"></div>
+      <div class="btn-row">
+        <button class="answer-btn yes" data-answer="yes" id="btnYes">Yes</button>
+        <button class="answer-btn maybe" data-answer="maybe" id="btnMaybe">Not sure</button>
+        <button class="answer-btn no" data-answer="no" id="btnNo">No</button>
+      </div>
+    </section>
+
+    <!-- RESULTS -->
+    <section class="section results" id="resultsSection">
+      <div class="result-tag" id="resultTag"></div>
+      <p class="result-note" id="resultSummary"></p>
+      <div class="divider"></div>
+      <p class="tiny" id="resultDisclaimer">
+        This tool is designed for education and basic screening only. It does not provide a
+        definitive authenticity determination. If anything feels off, treat the bill as
+        suspicious and have it checked by your bank or appropriate authorities.
+      </p>
+      <div class="btn-row">
+        <button id="restartBtn" class="secondary">Back to home</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ---- state ----
+    const state = { lang: 'en', denom: 20, theme: 'light' };
+
+    const i18n = {
+      en: {
+        badge: 'Experimental tool',
+        appTitle: 'BillCheck – Quick Screen',
+        disclaimer: 'This is a preliminary helper only. It cannot guarantee authenticity. When in doubt, have a bank or law enforcement verify the bill.',
+        howWorksTitle: 'How this works',
+        howWorksBody: 'Choose a U.S. bill, then we’ll use your camera to capture it, highlight key areas, and walk you through three quick checks.',
+        denomLabel: 'Supported today: U.S. bills',
+        intlComingSoon: 'International currencies: support coming soon.',
+        startScanBtn: 'Start scan',
+        settingsBtn: 'Settings',
+        scannerTitle: 'Align the bill',
+        scannerBody: 'Place the selected bill flat with decent light and align it inside the frame. Then tap Capture.',
+        currentDenomText: d => `Currently checking: $${d} (USD)`,
+        cameraOpening: 'Opening camera…',
+        cameraAlign: 'Align the bill in the frame and tap Capture.',
+        cameraError: 'Unable to access camera. Use HTTPS/localhost and check permissions.',
+        cameraNotReady: 'Camera not ready yet. Try again in a moment.',
+        cameraCaptured: 'Image captured. Use this shot or retake.',
+        captureBtn: 'Capture',
+        retakeBtn: 'Retake',
+        beginChecksBtn: 'Begin checks',
+        stepIndicator: (i, t) => `Step ${i + 1} of ${t}`,
+        steps: d => [
+          {
+            title: 'Watermark / embedded portrait',
+            body: `Hold the $${d} bill up to a bright light and look in the highlighted area. Do you see a faint portrait or watermark that matches the main portrait, or a similar security image for this denomination?`
+          },
+          {
+            title: 'Security thread or embedded strip',
+            body: `Hold the $${d} bill to the light and look for a thin, embedded strip in the highlighted region. On many denominations this is a security thread that runs vertically and can be seen from both sides.`
+          },
+          {
+            title: 'Color / print behavior',
+            body: `Keep the $${d} bill flat and tilt it slowly. In the highlighted corner or ink area, look for color-shifting ink, sharp printing, and clear edges. Does anything unusual stand out, like blurry or muddy printing?`
+          },
+        ],
+        btnYes: 'Yes',
+        btnMaybe: 'Not sure',
+        btnNo: 'No',
+        resultLikely: 'Likely Genuine (Preliminary)',
+        resultSuspicious: 'Suspicious – Get it checked',
+        resultInconclusive: 'Inconclusive – Conditions poor',
+        resultLikelyText: 'Most key security features appear normal based on your answers. This is a helpful sign, but not a guarantee. For large amounts or if you still feel unsure, have the bill verified by a bank.',
+        resultSuspiciousText: 'One or more key security features appear to be missing or unusual. Treat this bill as suspicious and have it checked by a bank or appropriate authorities.',
+        resultInconclusiveText: 'It was hard to confirm the main security features. Lighting, camera angle, or bill condition may have made checks difficult. If you have any doubts, ask a bank to verify the bill.',
+        resultDisclaimer: 'This tool is designed for education and basic screening only. It does not provide a definitive authenticity determination. If anything feels off, treat the bill as suspicious and have it checked by your bank or appropriate authorities.',
+        restartBtn: 'Back to home',
+        settingsTitle: 'Settings',
+        settingsIntro: 'Adjust language and theme. These settings apply across the app.',
+        settingsLangLabel: 'Language',
+        settingsThemeLabel: 'Theme',
+        settingsBack: 'Back to home',
+        themeLight: 'Light',
+        themeDark: 'Dark',
+        langFullEn: 'English',
+        langFullEs: 'Español'
+      },
+      es: {
+        badge: 'Herramienta experimental',
+        appTitle: 'BillCheck – Revisión rápida',
+        disclaimer: 'Esta es solo una ayuda preliminar. No puede garantizar la autenticidad. En caso de duda, pide que el billete sea verificado por un banco o las autoridades.',
+        howWorksTitle: 'Cómo funciona',
+        howWorksBody: 'Elige un billete de EE. UU. y usaremos la cámara para capturarlo, resaltar zonas clave y guiarte por tres comprobaciones rápidas.',
+        denomLabel: 'Compatibles hoy: billetes de EE. UU.',
+        intlComingSoon: 'Monedas internacionales: compatibilidad disponible pronto.',
+        startScanBtn: 'Iniciar escaneo',
+        settingsBtn: 'Configuración',
+        scannerTitle: 'Alinea el billete',
+        scannerBody: 'Coloca el billete elegido en una superficie plana, con buena luz, y alinéalo dentro del marco. Luego toca Capturar.',
+        currentDenomText: d => `Comprobando: $${d} (USD)`,
+        cameraOpening: 'Abriendo la cámara…',
+        cameraAlign: 'Alinea el billete en el marco y toca Capturar.',
+        cameraError: 'No se pudo acceder a la cámara. Usa HTTPS/localhost y revisa los permisos.',
+        cameraNotReady: 'La cámara aún no está lista. Intenta de nuevo en un momento.',
+        cameraCaptured: 'Imagen capturada. Usa esta toma o repite.',
+        captureBtn: 'Capturar',
+        retakeBtn: 'Repetir',
+        beginChecksBtn: 'Empezar revisión',
+        stepIndicator: (i, t) => `Paso ${i + 1} de ${t}`,
+        steps: d => [
+          {
+            title: 'Marca de agua / retrato',
+            body: `Sostén el billete de $${d} frente a una luz fuerte y mira en la zona resaltada. ¿Ves un retrato tenue o marca de agua que coincida con el retrato principal, o una imagen de seguridad similar para este valor?`
+          },
+          {
+            title: 'Hilo de seguridad o franja',
+            body: `Sostén el billete de $${d} a contraluz y busca una tira delgada incrustada en la zona resaltada. En muchos valores esto es un hilo de seguridad vertical visible desde ambos lados.`
+          },
+          {
+            title: 'Color / calidad de impresión',
+            body: `Mantén el billete de $${d} plano y inclínalo lentamente. En la esquina o zona de tinta resaltada, busca tinta que cambie de color, impresión nítida y bordes claros. ¿Notas algo raro, como impresión borrosa o manchada?`
+          },
+        ],
+        btnYes: 'Sí',
+        btnMaybe: 'No estoy seguro',
+        btnNo: 'No',
+        resultLikely: 'Probablemente auténtico (preliminar)',
+        resultSuspicious: 'Sospechoso – Pide revisión',
+        resultInconclusive: 'Inconcluso – Condiciones deficientes',
+        resultLikelyText: 'Según tus respuestas, la mayoría de las características de seguridad parecen normales. Es una buena señal, pero no una garantía. Para importes grandes o si tienes dudas, haz que un banco verifique el billete.',
+        resultSuspiciousText: 'Una o más características de seguridad parecen faltar o ser extrañas. Trata este billete como sospechoso y haz que lo revise un banco o las autoridades.',
+        resultInconclusiveText: 'Ha sido difícil confirmar las principales características de seguridad. La luz, el ángulo de la cámara o el estado del billete pueden haber complicado la revisión. Si tienes dudas, pide a un banco que verifique el billete.',
+        resultDisclaimer: 'Esta herramienta está pensada solo para educación y una revisión básica. No ofrece una determinación definitiva de autenticidad. Si algo no te cuadra, trata el billete como sospechoso y haz que lo revise tu banco o las autoridades.',
+        restartBtn: 'Volver al inicio',
+        settingsTitle: 'Configuración',
+        settingsIntro: 'Ajusta el idioma y el tema. Estos ajustes afectan a toda la aplicación.',
+        settingsLangLabel: 'Idioma',
+        settingsThemeLabel: 'Tema',
+        settingsBack: 'Volver al inicio',
+        themeLight: 'Claro',
+        themeDark: 'Oscuro',
+        langFullEn: 'Inglés',
+        langFullEs: 'Español'
+      }
+    };
+
+    // ---- DOM refs ----
+    const appRoot = document.querySelector('.app');
+    const bodyEl = document.body;
+
+    const homeSection = document.getElementById('homeSection');
+    const settingsSection = document.getElementById('settingsSection');
+    const scannerSection = document.getElementById('scannerSection');
+    const checklistSection = document.getElementById('checklistSection');
+    const resultsSection = document.getElementById('resultsSection');
+
+    const badgeText = document.getElementById('badgeText');
+    const appTitle = document.getElementById('appTitle');
+    const disclaimerText = document.getElementById('disclaimerText');
+    const howWorksTitle = document.getElementById('howWorksTitle');
+    const howWorksBody = document.getElementById('howWorksBody');
+    const denomLabel = document.getElementById('denomLabel');
+    const intlComingSoon = document.getElementById('intlComingSoon');
+
+    const startScanBtn = document.getElementById('startScanBtn');
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const settingsTitle = document.getElementById('settingsTitle');
+    const settingsIntro = document.getElementById('settingsIntro');
+    const settingsLangLabel = document.getElementById('settingsLangLabel');
+    const settingsThemeLabel = document.getElementById('settingsThemeLabel');
+    const settingsBackBtn = document.getElementById('settingsBackBtn');
+
+    const settingsLangEn = document.getElementById('settingsLangEn');
+    const settingsLangEs = document.getElementById('settingsLangEs');
+    const themeLightBtn = document.getElementById('themeLightBtn');
+    const themeDarkBtn = document.getElementById('themeDarkBtn');
+
+    const scannerTitle = document.getElementById('scannerTitle');
+    const scannerBody = document.getElementById('scannerBody');
+    const currentDenomText = document.getElementById('currentDenomText');
+    const cameraStatus = document.getElementById('cameraStatus');
+
+    const captureBtn = document.getElementById('captureBtn');
+    const retakeBtn = document.getElementById('retakeBtn');
+    const beginChecksBtn = document.getElementById('beginChecksBtn');
+    const scannerBackBtn = document.getElementById('scannerBackBtn');
+
+    const stepIndicator = document.getElementById('stepIndicator');
+    const stepTitle = document.getElementById('stepTitle');
+    const stepBody = document.getElementById('stepBody');
+    const btnYes = document.getElementById('btnYes');
+    const btnMaybe = document.getElementById('btnMaybe');
+    const btnNo = document.getElementById('btnNo');
+
+    const resultTag = document.getElementById('resultTag');
+    const resultSummary = document.getElementById('resultSummary');
+    const resultDisclaimer = document.getElementById('resultDisclaimer');
+    const restartBtn = document.getElementById('restartBtn');
+
+    const langEn = document.getElementById('langEn');
+    const langEs = document.getElementById('langEs');
+
+    const denomRow = document.getElementById('denomRow');
+
+    const video = document.getElementById('video');
+    const captureCanvas = document.getElementById('captureCanvas');
+    const frameOverlay = document.getElementById('frameOverlay');
+
+    const answerButtons = document.querySelectorAll('.answer-btn');
+
+    let stream = null;
+    let currentStepIndex = 0;
+    let steps = i18n[state.lang].steps(state.denom);
+    const answers = [];
+
+    // ---- helpers ----
+    function showSection(section) {
+      homeSection.classList.remove('active');
+      settingsSection.classList.remove('active');
+      scannerSection.classList.remove('active');
+      checklistSection.classList.remove('active');
+      resultsSection.classList.remove('active');
+
+      if (section) section.classList.add('active');
+    }
+
+    function applyLanguage() {
+      const t = i18n[state.lang];
+      badgeText.textContent = t.badge;
+      appTitle.textContent = t.appTitle;
+      disclaimerText.innerHTML = t.disclaimer;
+      howWorksTitle.textContent = t.howWorksTitle;
+      howWorksBody.textContent = t.howWorksBody;
+      denomLabel.textContent = t.denomLabel;
+      intlComingSoon.textContent = t.intlComingSoon;
+      startScanBtn.textContent = t.startScanBtn;
+      openSettingsBtn.textContent = t.settingsBtn;
+
+      scannerTitle.textContent = t.scannerTitle;
+      scannerBody.textContent = t.scannerBody;
+      currentDenomText.textContent = t.currentDenomText(state.denom);
+
+      cameraStatus.textContent = t.cameraOpening;
+      captureBtn.textContent = t.captureBtn;
+      retakeBtn.textContent = t.retakeBtn;
+      beginChecksBtn.textContent = t.beginChecksBtn;
+
+      stepIndicator.textContent = t.stepIndicator(currentStepIndex, steps.length);
+      stepTitle.textContent = steps[currentStepIndex].title;
+      stepBody.textContent = steps[currentStepIndex].body;
+      btnYes.textContent = t.btnYes;
+      btnMaybe.textContent = t.btnMaybe;
+      btnNo.textContent = t.btnNo;
+
+      resultDisclaimer.textContent = t.resultDisclaimer;
+      restartBtn.textContent = t.restartBtn;
+
+      settingsTitle.textContent = t.settingsTitle;
+      settingsIntro.textContent = t.settingsIntro;
+      settingsLangLabel.textContent = t.settingsLangLabel;
+      settingsThemeLabel.textContent = t.settingsThemeLabel;
+      settingsBackBtn.textContent = t.settingsBack;
+
+      settingsLangEn.textContent = t.langFullEn;
+      settingsLangEs.textContent = t.langFullEs;
+      themeLightBtn.textContent = t.themeLight;
+      themeDarkBtn.textContent = t.themeDark;
+    }
+
+    function updateLangToggleUI() {
+      if (state.lang === 'en') {
+        langEn.classList.add('active');
+        langEs.classList.remove('active');
+        settingsLangEn.classList.add('active');
+        settingsLangEs.classList.remove('active');
+      } else {
+        langEs.classList.add('active');
+        langEn.classList.remove('active');
+        settingsLangEs.classList.add('active');
+        settingsLangEn.classList.remove('active');
+      }
+    }
+
+    function updateDenomButtons() {
+      const buttons = denomRow.querySelectorAll('.denom-btn');
+      buttons.forEach(btn => {
+        const val = parseInt(btn.getAttribute('data-denom'), 10);
+        if (val === state.denom) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+      const t = i18n[state.lang];
+      currentDenomText.textContent = t.currentDenomText(state.denom);
+      steps = t.steps(state.denom);
+    }
+
+    function applyTheme() {
+      if (state.theme === 'light') {
+        bodyEl.classList.remove('theme-dark');
+        bodyEl.classList.add('theme-light');
+        themeLightBtn.classList.add('active');
+        themeDarkBtn.classList.remove('active');
+      } else {
+        bodyEl.classList.remove('theme-light');
+        bodyEl.classList.add('theme-dark');
+        themeDarkBtn.classList.add('active');
+        themeLightBtn.classList.remove('active');
+      }
+    }
+
+    async function startCamera() {
+      const t = i18n[state.lang];
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        cameraStatus.textContent = t.cameraError;
+        console.warn('getUserMedia not supported');
+        return;
+      }
+      cameraStatus.textContent = t.cameraOpening;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' },
+          audio: false
+        });
+        video.srcObject = stream;
+        cameraStatus.textContent = t.cameraAlign;
+      } catch (err) {
+        console.error('Camera error', err);
+        cameraStatus.textContent = t.cameraError;
+      }
+    }
+
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = null;
+      }
+    }
+
+    function drawOverlays() {
+      const ctx = captureCanvas.getContext('2d');
+      const w = captureCanvas.width;
+      const h = captureCanvas.height;
+
+      ctx.strokeStyle = 'rgba(56,189,248,0.9)';
+      ctx.lineWidth = Math.max(2, w * 0.003);
+
+      const wmX = w * 0.07;
+      const wmY = h * 0.25;
+      const wmW = w * 0.18;
+      const wmH = h * 0.5;
+      ctx.strokeRect(wmX, wmY, wmW, wmH);
+
+      const stX = w * 0.33;
+      const stY = h * 0.15;
+      const stW = w * 0.03;
+      const stH = h * 0.7;
+      ctx.strokeRect(stX, stY, stW, stH);
+
+      const csX = w * 0.70;
+      const csY = h * 0.60;
+      const csW = w * 0.22;
+      const csH = h * 0.25;
+      ctx.strokeRect(csX, csY, csW, csH);
+    }
+
+    function captureFrame() {
+      const t = i18n[state.lang];
+      const width = video.videoWidth;
+      const height = video.videoHeight;
+
+      if (!width || !height) {
+        cameraStatus.textContent = t.cameraNotReady;
+        console.warn('Video not ready for capture');
+        return;
+      }
+
+      captureCanvas.width = width;
+      captureCanvas.height = height;
+
+      const ctx = captureCanvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, width, height);
+
+      video.style.display = 'none';
+      captureCanvas.style.display = 'block';
+      frameOverlay.style.display = 'none';
+
+      drawOverlays();
+
+      cameraStatus.textContent = t.cameraCaptured;
+      captureBtn.style.display = 'none';
+      retakeBtn.style.display = 'inline-flex';
+      beginChecksBtn.style.display = 'inline-flex';
+
+      // Exit full-screen scanning-only mode and return to card layout
+      appRoot.classList.remove('scanning-full');
+    }
+
+    function resetScannerView() {
+      const t = i18n[state.lang];
+      video.style.display = 'block';
+      captureCanvas.style.display = 'none';
+      frameOverlay.style.display = 'flex';
+      captureBtn.style.display = 'inline-flex';
+      retakeBtn.style.display = 'none';
+      beginChecksBtn.style.display = 'none';
+      cameraStatus.textContent = t.cameraAlign;
+    }
+
+    function showStep(index) {
+      const t = i18n[state.lang];
+      currentStepIndex = index;
+      stepIndicator.textContent = t.stepIndicator(index, steps.length);
+      stepTitle.textContent = steps[index].title;
+      stepBody.textContent = steps[index].body;
+    }
+
+    function computeResult() {
+      const t = i18n[state.lang];
+      let score = 0;
+      let hasNo = false;
+      let allMaybe = true;
+
+      for (const a of answers) {
+        if (a === 'yes') {
+          score += 2;
+          allMaybe = false;
+        } else if (a === 'maybe') {
+          score += 1;
+        } else if (a === 'no') {
+          hasNo = true;
+          allMaybe = false;
+        }
+      }
+
+      let tagText, tagClass, summary;
+
+      if (hasNo && score <= 2) {
+        tagText = t.resultSuspicious;
+        tagClass = 'bad';
+        summary = t.resultSuspiciousText;
+      } else if (allMaybe || score <= 2) {
+        tagText = t.resultInconclusive;
+        tagClass = 'warn';
+        summary = t.resultInconclusiveText;
+      } else {
+        tagText = t.resultLikely;
+        tagClass = 'ok';
+        summary = t.resultLikelyText;
+      }
+
+      resultTag.className = `result-tag ${tagClass}`;
+      resultTag.textContent = tagText;
+      resultSummary.textContent = summary;
+    }
+
+    // ---- events ----
+    langEn.addEventListener('click', () => {
+      state.lang = 'en';
+      steps = i18n[state.lang].steps(state.denom);
+      updateLangToggleUI();
+      applyLanguage();
+    });
+
+    langEs.addEventListener('click', () => {
+      state.lang = 'es';
+      steps = i18n[state.lang].steps(state.denom);
+      updateLangToggleUI();
+      applyLanguage();
+    });
+
+    settingsLangEn.addEventListener('click', () => {
+      state.lang = 'en';
+      steps = i18n[state.lang].steps(state.denom);
+      updateLangToggleUI();
+      applyLanguage();
+    });
+
+    settingsLangEs.addEventListener('click', () => {
+      state.lang = 'es';
+      steps = i18n[state.lang].steps(state.denom);
+      updateLangToggleUI();
+      applyLanguage();
+    });
+
+    themeLightBtn.addEventListener('click', () => {
+      state.theme = 'light';
+      applyTheme();
+    });
+
+    themeDarkBtn.addEventListener('click', () => {
+      state.theme = 'dark';
+      applyTheme();
+    });
+
+    denomRow.addEventListener('click', e => {
+      if (!e.target.classList.contains('denom-btn')) return;
+      const denom = parseInt(e.target.getAttribute('data-denom'), 10);
+      if (!Number.isNaN(denom)) {
+        state.denom = denom;
+        updateDenomButtons();
+        currentStepIndex = 0;
+        showStep(0);
+      }
+    });
+
+    openSettingsBtn.addEventListener('click', () => {
+      showSection(settingsSection);
+    });
+
+    settingsBackBtn.addEventListener('click', () => {
+      showSection(homeSection);
+    });
+
+    startScanBtn.addEventListener('click', () => {
+      answers.length = 0;
+      currentStepIndex = 0;
+      updateDenomButtons();
+      showStep(0);
+      showSection(scannerSection);
+      resetScannerView();
+      applyLanguage();
+      appRoot.classList.add('scanning-full'); // enter fullscreen scanning-only mode
+      startCamera();
+    });
+
+    scannerBackBtn.addEventListener('click', () => {
+      stopCamera();
+      appRoot.classList.remove('scanning-full');
+      showSection(homeSection);
+    });
+
+    captureBtn.addEventListener('click', captureFrame);
+
+    retakeBtn.addEventListener('click', () => {
+      resetScannerView();
+      applyLanguage();
+      appRoot.classList.add('scanning-full');
+      startCamera();
+    });
+
+    beginChecksBtn.addEventListener('click', () => {
+      stopCamera();
+      showSection(checklistSection);
+      steps = i18n[state.lang].steps(state.denom);
+      currentStepIndex = 0;
+      showStep(0);
+    });
+
+    answerButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const answer = btn.getAttribute('data-answer');
+        answers[currentStepIndex] = answer;
+
+        if (currentStepIndex < steps.length - 1) {
+          showStep(currentStepIndex + 1);
+        } else {
+          showSection(resultsSection);
+          computeResult();
+        }
+      });
+    });
+
+    restartBtn.addEventListener('click', () => {
+      stopCamera();
+      appRoot.classList.remove('scanning-full');
+      showSection(homeSection);
+    });
+
+    window.addEventListener('beforeunload', stopCamera);
+
+    // ---- initial setup ----
+    updateLangToggleUI();
+    applyTheme();
+    updateDenomButtons();
+    showStep(0);
+    applyLanguage();
+    showSection(homeSection);
+  </script>
+</body>
+</html>
