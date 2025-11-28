@@ -183,6 +183,14 @@
       border: 1px solid var(--border-soft);
     }
 
+    button.subtle {
+      background: var(--bg-elevated-soft);
+      color: var(--text-muted);
+      box-shadow: none;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+    }
+
     button:active {
       transform: translateY(1px) scale(0.99);
       box-shadow: 0 3px 10px rgba(0,0,0,0.3);
@@ -223,12 +231,13 @@
       line-height: 1.3;
     }
 
-    /* Home / settings / scanner / results visibility */
+    /* Section visibility */
     #homeSection,
     #settingsSection,
     #scannerSection,
     #checklistSection,
-    #resultsSection {
+    #resultsSection,
+    #myScansSection {
       display: none;
     }
 
@@ -236,11 +245,12 @@
     #settingsSection.active,
     #scannerSection.active,
     #checklistSection.active,
-    #resultsSection.active {
+    #resultsSection.active,
+    #myScansSection.active {
       display: block;
     }
 
-    /* Scanner layout */
+    /* Scanner */
     .scanner {
       display: flex;
       flex-direction: column;
@@ -294,7 +304,6 @@
       margin-top: 0.25rem;
     }
 
-    /* Round capture button row */
     .capture-row {
       justify-content: center;
       align-items: center;
@@ -466,7 +475,8 @@
     .app.scanning-full #homeSection,
     .app.scanning-full #settingsSection,
     .app.scanning-full #checklistSection,
-    .app.scanning-full #resultsSection {
+    .app.scanning-full #resultsSection,
+    .app.scanning-full #myScansSection {
       display: none !important;
     }
 
@@ -515,6 +525,172 @@
     .app.scanning-full .capture-row {
       padding: 0.5rem 0 0.75rem;
     }
+
+    /* AI feature breakdown card */
+    .results-features {
+      margin-top: 0.35rem;
+      padding: 0.55rem 0.6rem;
+      border-radius: 0.65rem;
+      background: var(--bg-elevated-soft);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .results-features-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.35rem;
+    }
+
+    .results-features-title {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .results-features-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .results-features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .feature-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .feature-label {
+      color: var(--text-softer);
+      flex: 1;
+    }
+
+    .feature-right {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .feature-score {
+      font-variant-numeric: tabular-nums;
+      color: var(--text-muted);
+    }
+
+    .feature-status-pill {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .feature-status-pill.ok {
+      background: rgba(22, 163, 74, 0.16);
+      color: #166534;
+    }
+
+    .feature-status-pill.warn {
+      background: rgba(234, 179, 8, 0.16);
+      color: #854d0e;
+    }
+
+    .feature-status-pill.fail {
+      background: rgba(239, 68, 68, 0.18);
+      color: #b91c1c;
+    }
+
+    /* My Scans */
+    .my-scans-summary {
+      font-size: 0.78rem;
+      color: var(--text-softer);
+      margin-bottom: 0.4rem;
+    }
+
+    .scan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 260px;
+      overflow-y: auto;
+      margin-top: 0.2rem;
+    }
+
+    .scan-card {
+      display: flex;
+      gap: 0.55rem;
+      padding: 0.4rem;
+      border-radius: 0.65rem;
+      background: var(--bg);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .scan-thumb {
+      flex: 0 0 68px;
+      height: 44px;
+      border-radius: 0.35rem;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(15, 23, 42, 0.45);
+    }
+
+    .scan-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .scan-meta {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scan-line-primary {
+      font-size: 0.78rem;
+      color: var(--text);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.3rem;
+    }
+
+    .scan-line-secondary {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+    }
+
+    .scan-tag {
+      font-size: 0.7rem;
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+
+    .scan-tag.ok {
+      border-color: rgba(22, 163, 74, 0.7);
+      color: #166534;
+      background: rgba(22, 163, 74, 0.15);
+    }
+
+    .scan-tag.warn {
+      border-color: rgba(234, 179, 8, 0.7);
+      color: #854d0e;
+      background: rgba(234, 179, 8, 0.15);
+    }
+
+    .scan-tag.bad {
+      border-color: rgba(239, 68, 68, 0.7);
+      color: #b91c1c;
+      background: rgba(239, 68, 68, 0.16);
+    }
   </style>
 </head>
 <body class="theme-light">
@@ -541,7 +717,7 @@
       <h2 id="howWorksTitle">How this works</h2>
       <p id="howWorksBody">
         Choose a U.S. bill, then we’ll use your camera to capture it, highlight key areas,
-        and walk you through three quick checks.
+        and walk you through a quick AI-assisted screen.
       </p>
 
       <p class="tiny" id="denomLabel">
@@ -561,7 +737,23 @@
 
       <div class="btn-row">
         <button id="startScanBtn">Start scan</button>
+        <button id="openMyScansBtn" class="secondary">My scans</button>
         <button id="openSettingsBtn" class="secondary">Settings</button>
+      </div>
+    </section>
+
+    <!-- MY SCANS -->
+    <section class="section" id="myScansSection">
+      <h2 id="myScansTitle">My scans</h2>
+      <p class="my-scans-summary" id="myScansSummary">
+        No scans yet. When you run checks, your recent scans will show up here with a small thumbnail and risk summary.
+      </p>
+
+      <div class="scan-list" id="scanList"></div>
+
+      <div class="btn-row" style="margin-top:0.6rem;">
+        <button id="backFromMyScansBtn" class="secondary">Back to home</button>
+        <button id="clearScansBtn" class="subtle">Clear all</button>
       </div>
     </section>
 
@@ -621,7 +813,7 @@
         <div class="btn-row capture-row">
           <button id="captureBtn" class="round-capture">Capture</button>
           <button id="retakeBtn" class="secondary" style="display:none;">Retake</button>
-          <button id="beginChecksBtn" class="secondary" style="display:none;">Begin checks</button>
+          <button id="beginChecksBtn" class="secondary" style="display:none;">View results</button>
         </div>
         <p class="tiny">
           If the camera does not open, make sure you’re using a modern browser over HTTPS (or localhost)
@@ -630,7 +822,7 @@
       </div>
     </section>
 
-    <!-- CHECKLIST -->
+    <!-- CHECKLIST (optional manual, can be extended later) -->
     <section class="section checklist" id="checklistSection">
       <div class="step-indicator" id="stepIndicator">Step 1 of 3</div>
       <div class="step-header" id="stepTitle"></div>
@@ -646,6 +838,22 @@
     <section class="section results" id="resultsSection">
       <div class="result-tag" id="resultTag"></div>
       <p class="result-note" id="resultSummary"></p>
+
+      <!-- AI feature breakdown -->
+      <div class="results-features" id="resultsFeatures" style="display:none;">
+        <div class="results-features-header">
+          <div class="results-features-title" id="resultsFeaturesTitle">
+            AI feature breakdown
+          </div>
+          <div class="results-features-sub" id="resultsFeaturesSub">
+            Higher scores are closer to typical genuine behavior.
+          </div>
+        </div>
+        <div class="results-features-list" id="resultsFeaturesList">
+          <!-- rows injected by JS -->
+        </div>
+      </div>
+
       <div class="divider"></div>
       <p class="tiny" id="resultDisclaimer">
         This tool is designed for education and basic screening only. It does not provide a
@@ -659,204 +867,283 @@
   </div>
 
   <script>
+    // ---- Config ----
+    const ANALYZE_API_URL = "https://your-backend-url.com/analyze-note"; // TODO: replace
+    const SCANS_STORAGE_KEY = "billcheck_scans_v1";
+
     // ---- state ----
-    const state = { lang: 'en', denom: 20, theme: 'light' };
+    const state = { lang: "en", denom: 20, theme: "light" };
+
+    let stream = null;
+    let lastAnalysis = null;
+    let isAnalyzing = false;
+    let answers = [];
+    let currentStepIndex = 0;
+    let steps = [];
+    let scans = [];
+    let lastCaptureThumbBase64 = null;
 
     const i18n = {
       en: {
-        badge: 'Experimental tool',
-        appTitle: 'BillCheck – Quick Screen',
-        disclaimer: 'This is a preliminary helper only. It cannot guarantee authenticity. When in doubt, have a bank or law enforcement verify the bill.',
-        howWorksTitle: 'How this works',
-        howWorksBody: 'Choose a U.S. bill, then we’ll use your camera to capture it, highlight key areas, and walk you through three quick checks.',
-        denomLabel: 'Supported today: U.S. bills',
-        intlComingSoon: 'International currencies: support coming soon.',
-        startScanBtn: 'Start scan',
-        settingsBtn: 'Settings',
-        scannerTitle: 'Align the bill',
-        scannerBody: 'Place the selected bill flat with decent light and align it inside the frame. Then tap Capture.',
+        badge: "Experimental tool",
+        appTitle: "BillCheck – Quick Screen",
+        disclaimer: "This is a preliminary helper only. It cannot guarantee authenticity. When in doubt, have a bank or law enforcement verify the bill.",
+        howWorksTitle: "How this works",
+        howWorksBody: "Choose a U.S. bill, then we’ll use your camera to capture it, highlight key areas, and walk you through a quick AI-assisted screen.",
+        denomLabel: "Supported today: U.S. bills",
+        intlComingSoon: "International currencies: support coming soon.",
+        startScanBtn: "Start scan",
+        myScansBtn: "My scans",
+        settingsBtn: "Settings",
+        scannerTitle: "Align the bill",
+        scannerBody: "Place the selected bill flat with decent light and align it inside the frame. Then tap Capture.",
         currentDenomText: d => `Currently checking: $${d} (USD)`,
-        cameraOpening: 'Opening camera…',
-        cameraAlign: 'Align the bill in the frame and tap Capture.',
-        cameraError: 'Unable to access camera. Use HTTPS/localhost and check permissions.',
-        cameraNotReady: 'Camera not ready yet. Try again in a moment.',
-        cameraCaptured: 'Image captured. Use this shot or retake.',
-        captureBtn: 'Capture',
-        retakeBtn: 'Retake',
-        beginChecksBtn: 'Begin checks',
+        cameraOpening: "Opening camera…",
+        cameraAlign: "Align the bill in the frame and tap Capture.",
+        cameraError: "Unable to access camera. Use HTTPS/localhost and check permissions.",
+        cameraNotReady: "Camera not ready yet. Try again in a moment.",
+        cameraCaptured: "Image captured. Analysis is running in the background.",
+        captureBtn: "Capture",
+        retakeBtn: "Retake",
+        beginChecksBtn: "View results",
+        analyzing: "Analyzing note…",
+        analyzeDone: "Analysis complete. Tap View results.",
+        analyzeFailed: "Unable to analyze the note.",
         stepIndicator: (i, t) => `Step ${i + 1} of ${t}`,
         steps: d => [
           {
-            title: 'Watermark / embedded portrait',
+            title: "Watermark / embedded portrait",
             body: `Hold the $${d} bill up to a bright light and look in the highlighted area. Do you see a faint portrait or watermark that matches the main portrait, or a similar security image for this denomination?`
           },
           {
-            title: 'Security thread or embedded strip',
+            title: "Security thread or embedded strip",
             body: `Hold the $${d} bill to the light and look for a thin, embedded strip in the highlighted region. On many denominations this is a security thread that runs vertically and can be seen from both sides.`
           },
           {
-            title: 'Color / print behavior',
+            title: "Color / print behavior",
             body: `Keep the $${d} bill flat and tilt it slowly. In the highlighted corner or ink area, look for color-shifting ink, sharp printing, and clear edges. Does anything unusual stand out, like blurry or muddy printing?`
           },
         ],
-        btnYes: 'Yes',
-        btnMaybe: 'Not sure',
-        btnNo: 'No',
-        resultLikely: 'Likely Genuine (Preliminary)',
-        resultSuspicious: 'Suspicious – Get it checked',
-        resultInconclusive: 'Inconclusive – Conditions poor',
-        resultLikelyText: 'Most key security features appear normal based on your answers. This is a helpful sign, but not a guarantee. For large amounts or if you still feel unsure, have the bill verified by a bank.',
-        resultSuspiciousText: 'One or more key security features appear to be missing or unusual. Treat this bill as suspicious and have it checked by a bank or appropriate authorities.',
-        resultInconclusiveText: 'It was hard to confirm the main security features. Lighting, camera angle, or bill condition may have made checks difficult. If you have any doubts, ask a bank to verify the bill.',
-        resultDisclaimer: 'This tool is designed for education and basic screening only. It does not provide a definitive authenticity determination. If anything feels off, treat the bill as suspicious and have it checked by your bank or appropriate authorities.',
-        restartBtn: 'Back to home',
-        settingsTitle: 'Settings',
-        settingsIntro: 'Adjust language and theme. These settings apply across the app.',
-        settingsLangLabel: 'Language',
-        settingsThemeLabel: 'Theme',
-        settingsBack: 'Back to home',
-        themeLight: 'Light',
-        themeDark: 'Dark',
-        langFullEn: 'English',
-        langFullEs: 'Español'
+        btnYes: "Yes",
+        btnMaybe: "Not sure",
+        btnNo: "No",
+        resultLikely: "Likely Genuine (Preliminary)",
+        resultSuspicious: "Suspicious – Get it checked",
+        resultInconclusive: "Inconclusive – Conditions poor",
+        resultLikelyText: "Most key security features appear normal based on your answers and AI analysis. This is a helpful sign, but not a guarantee. For large amounts or if you still feel unsure, have the bill verified by a bank.",
+        resultSuspiciousText: "One or more key indicators appear unusual. Treat this bill as suspicious and have it checked by a bank or appropriate authorities.",
+        resultInconclusiveText: "It was hard to confirm the main security features. Lighting, camera angle, or bill condition may have made checks difficult. If you have any doubts, ask a bank to verify the bill.",
+        resultDisclaimer: "This tool is designed for education and basic screening only. It does not provide a definitive authenticity determination. If anything feels off, treat the bill as suspicious and have it checked by your bank or appropriate authorities.",
+        restartBtn: "Back to home",
+        settingsTitle: "Settings",
+        settingsIntro: "Adjust language and theme. These settings apply across the app.",
+        settingsLangLabel: "Language",
+        settingsThemeLabel: "Theme",
+        settingsBack: "Back to home",
+        themeLight: "Light",
+        themeDark: "Dark",
+        langFullEn: "English",
+        langFullEs: "Español",
+        myScansTitle: "My scans",
+        myScansEmpty: "No scans yet. When you run checks, your recent scans will show up here with a small thumbnail and risk summary.",
+        myScansSummary: (count) =>
+          count === 0
+            ? "No scans yet."
+            : count === 1
+            ? "You have 1 saved scan."
+            : `You have ${count} saved scans.`,
+        clearScansLabel: "Clear all",
+        backFromMyScans: "Back to home",
+        resultsFeaturesTitle: "AI feature breakdown",
+        resultsFeaturesSub: "Higher scores are closer to typical genuine behavior."
       },
       es: {
-        badge: 'Herramienta experimental',
-        appTitle: 'BillCheck – Revisión rápida',
-        disclaimer: 'Esta es solo una ayuda preliminar. No puede garantizar la autenticidad. En caso de duda, pide que el billete sea verificado por un banco o las autoridades.',
-        howWorksTitle: 'Cómo funciona',
-        howWorksBody: 'Elige un billete de EE. UU. y usaremos la cámara para capturarlo, resaltar zonas clave y guiarte por tres comprobaciones rápidas.',
-        denomLabel: 'Compatibles hoy: billetes de EE. UU.',
-        intlComingSoon: 'Monedas internacionales: compatibilidad disponible pronto.',
-        startScanBtn: 'Iniciar escaneo',
-        settingsBtn: 'Configuración',
-        scannerTitle: 'Alinea el billete',
-        scannerBody: 'Coloca el billete elegido en una superficie plana, con buena luz, y alinéalo dentro del marco. Luego toca Capturar.',
+        badge: "Herramienta experimental",
+        appTitle: "BillCheck – Revisión rápida",
+        disclaimer: "Esta es solo una ayuda preliminar. No puede garantizar la autenticidad. En caso de duda, pide que el billete sea verificado por un banco o las autoridades.",
+        howWorksTitle: "Cómo funciona",
+        howWorksBody: "Elige un billete de EE. UU. y usaremos la cámara para capturarlo, resaltar zonas clave y guiarte por una revisión rápida asistida por IA.",
+        denomLabel: "Compatibles hoy: billetes de EE. UU.",
+        intlComingSoon: "Monedas internacionales: compatibilidad disponible pronto.",
+        startScanBtn: "Iniciar escaneo",
+        myScansBtn: "Mis escaneos",
+        settingsBtn: "Configuración",
+        scannerTitle: "Alinea el billete",
+        scannerBody: "Coloca el billete elegido en una superficie plana, con buena luz, y alinéalo dentro del marco. Luego toca Capturar.",
         currentDenomText: d => `Comprobando: $${d} (USD)`,
-        cameraOpening: 'Abriendo la cámara…',
-        cameraAlign: 'Alinea el billete en el marco y toca Capturar.',
-        cameraError: 'No se pudo acceder a la cámara. Usa HTTPS/localhost y revisa los permisos.',
-        cameraNotReady: 'La cámara aún no está lista. Intenta de nuevo en un momento.',
-        cameraCaptured: 'Imagen capturada. Usa esta toma o repite.',
-        captureBtn: 'Capturar',
-        retakeBtn: 'Repetir',
-        beginChecksBtn: 'Empezar revisión',
+        cameraOpening: "Abriendo la cámara…",
+        cameraAlign: "Alinea el billete en el marco y toca Capturar.",
+        cameraError: "No se pudo acceder a la cámara. Usa HTTPS/localhost y revisa los permisos.",
+        cameraNotReady: "La cámara aún no está lista. Intenta de nuevo en un momento.",
+        cameraCaptured: "Imagen capturada. El análisis se está ejecutando en segundo plano.",
+        captureBtn: "Capturar",
+        retakeBtn: "Repetir",
+        beginChecksBtn: "Ver resultados",
+        analyzing: "Analizando billete…",
+        analyzeDone: "Análisis completado. Toca Ver resultados.",
+        analyzeFailed: "No se pudo analizar el billete.",
         stepIndicator: (i, t) => `Paso ${i + 1} de ${t}`,
         steps: d => [
           {
-            title: 'Marca de agua / retrato',
+            title: "Marca de agua / retrato",
             body: `Sostén el billete de $${d} frente a una luz fuerte y mira en la zona resaltada. ¿Ves un retrato tenue o marca de agua que coincida con el retrato principal, o una imagen de seguridad similar para este valor?`
           },
           {
-            title: 'Hilo de seguridad o franja',
+            title: "Hilo de seguridad o franja",
             body: `Sostén el billete de $${d} a contraluz y busca una tira delgada incrustada en la zona resaltada. En muchos valores esto es un hilo de seguridad vertical visible desde ambos lados.`
           },
           {
-            title: 'Color / calidad de impresión',
-            body: `Mantén el billete de $${d} plano y inclínalo lentamente. En la esquina o zona de tinta resaltada, busca tinta que cambie de color, impresión nítida y bordes claros. ¿Notas algo raro, como impresión borrosa o manchada?`
+            title: "Color / calidad de impresión",
+            body: `Mantén el billete de $${d} plano e inclínalo lentamente. En la esquina o zona de tinta resaltada, busca tinta que cambie de color, impresión nítida y bordes claros. ¿Notas algo raro, como impresión borrosa o manchada?`
           },
         ],
-        btnYes: 'Sí',
-        btnMaybe: 'No estoy seguro',
-        btnNo: 'No',
-        resultLikely: 'Probablemente auténtico (preliminar)',
-        resultSuspicious: 'Sospechoso – Pide revisión',
-        resultInconclusive: 'Inconcluso – Condiciones deficientes',
-        resultLikelyText: 'Según tus respuestas, la mayoría de las características de seguridad parecen normales. Es una buena señal, pero no una garantía. Para importes grandes o si tienes dudas, haz que un banco verifique el billete.',
-        resultSuspiciousText: 'Una o más características de seguridad parecen faltar o ser extrañas. Trata este billete como sospechoso y haz que lo revise un banco o las autoridades.',
-        resultInconclusiveText: 'Ha sido difícil confirmar las principales características de seguridad. La luz, el ángulo de la cámara o el estado del billete pueden haber complicado la revisión. Si tienes dudas, pide a un banco que verifique el billete.',
-        resultDisclaimer: 'Esta herramienta está pensada solo para educación y una revisión básica. No ofrece una determinación definitiva de autenticidad. Si algo no te cuadra, trata el billete como sospechoso y haz que lo revise tu banco o las autoridades.',
-        restartBtn: 'Volver al inicio',
-        settingsTitle: 'Configuración',
-        settingsIntro: 'Ajusta el idioma y el tema. Estos ajustes afectan a toda la aplicación.',
-        settingsLangLabel: 'Idioma',
-        settingsThemeLabel: 'Tema',
-        settingsBack: 'Volver al inicio',
-        themeLight: 'Claro',
-        themeDark: 'Oscuro',
-        langFullEn: 'Inglés',
-        langFullEs: 'Español'
+        btnYes: "Sí",
+        btnMaybe: "No estoy seguro",
+        btnNo: "No",
+        resultLikely: "Probablemente auténtico (preliminar)",
+        resultSuspicious: "Sospechoso – Pide revisión",
+        resultInconclusive: "Inconcluso – Condiciones deficientes",
+        resultLikelyText: "Según tus respuestas y el análisis de IA, la mayoría de las características de seguridad parecen normales. Es una buena señal, pero no una garantía. Para importes grandes o si tienes dudas, haz que un banco verifique el billete.",
+        resultSuspiciousText: "Una o más señales clave parecen inusuales. Trata este billete como sospechoso y haz que lo revise un banco o las autoridades.",
+        resultInconclusiveText: "Ha sido difícil confirmar las principales características de seguridad. La luz, el ángulo de la cámara o el estado del billete pueden haber complicado la revisión. Si tienes dudas, pide a un banco que verifique el billete.",
+        resultDisclaimer: "Esta herramienta está pensada solo para educación y una revisión básica. No ofrece una determinación definitiva de autenticidad. Si algo no te cuadra, trata el billete como sospechoso y haz que lo revise tu banco o las autoridades.",
+        restartBtn: "Volver al inicio",
+        settingsTitle: "Configuración",
+        settingsIntro: "Ajusta el idioma y el tema. Estos ajustes afectan a toda la aplicación.",
+        settingsLangLabel: "Idioma",
+        settingsThemeLabel: "Tema",
+        settingsBack: "Volver al inicio",
+        themeLight: "Claro",
+        themeDark: "Oscuro",
+        langFullEn: "Inglés",
+        langFullEs: "Español",
+        myScansTitle: "Mis escaneos",
+        myScansEmpty: "Aún no hay escaneos. Cuando hagas revisiones, verás aquí miniaturas y un resumen de riesgo.",
+        myScansSummary: (count) =>
+          count === 0
+            ? "Aún no hay escaneos."
+            : count === 1
+            ? "Tienes 1 escaneo guardado."
+            : `Tienes ${count} escaneos guardados.`,
+        clearScansLabel: "Borrar todos",
+        backFromMyScans: "Volver al inicio",
+        resultsFeaturesTitle: "Desglose de funciones IA",
+        resultsFeaturesSub: "Puntuaciones más altas se acercan al comportamiento típico de un billete auténtico."
       }
     };
 
     // ---- DOM refs ----
-    const appRoot = document.querySelector('.app');
+    const appRoot = document.querySelector(".app");
     const bodyEl = document.body;
 
-    const homeSection = document.getElementById('homeSection');
-    const settingsSection = document.getElementById('settingsSection');
-    const scannerSection = document.getElementById('scannerSection');
-    const checklistSection = document.getElementById('checklistSection');
-    const resultsSection = document.getElementById('resultsSection');
+    const homeSection = document.getElementById("homeSection");
+    const settingsSection = document.getElementById("settingsSection");
+    const scannerSection = document.getElementById("scannerSection");
+    const checklistSection = document.getElementById("checklistSection");
+    const resultsSection = document.getElementById("resultsSection");
+    const myScansSection = document.getElementById("myScansSection");
 
-    const badgeText = document.getElementById('badgeText');
-    const appTitle = document.getElementById('appTitle');
-    const disclaimerText = document.getElementById('disclaimerText');
-    const howWorksTitle = document.getElementById('howWorksTitle');
-    const howWorksBody = document.getElementById('howWorksBody');
-    const denomLabel = document.getElementById('denomLabel');
-    const intlComingSoon = document.getElementById('intlComingSoon');
+    const badgeText = document.getElementById("badgeText");
+    const appTitle = document.getElementById("appTitle");
+    const disclaimerText = document.getElementById("disclaimerText");
+    const howWorksTitle = document.getElementById("howWorksTitle");
+    const howWorksBody = document.getElementById("howWorksBody");
+    const denomLabel = document.getElementById("denomLabel");
+    const intlComingSoon = document.getElementById("intlComingSoon");
 
-    const startScanBtn = document.getElementById('startScanBtn');
-    const openSettingsBtn = document.getElementById('openSettingsBtn');
-    const settingsTitle = document.getElementById('settingsTitle');
-    const settingsIntro = document.getElementById('settingsIntro');
-    const settingsLangLabel = document.getElementById('settingsLangLabel');
-    const settingsThemeLabel = document.getElementById('settingsThemeLabel');
-    const settingsBackBtn = document.getElementById('settingsBackBtn');
+    const startScanBtn = document.getElementById("startScanBtn");
+    const openMyScansBtn = document.getElementById("openMyScansBtn");
+    const openSettingsBtn = document.getElementById("openSettingsBtn");
 
-    const settingsLangEn = document.getElementById('settingsLangEn');
-    const settingsLangEs = document.getElementById('settingsLangEs');
-    const themeLightBtn = document.getElementById('themeLightBtn');
-    const themeDarkBtn = document.getElementById('themeDarkBtn');
+    const settingsTitle = document.getElementById("settingsTitle");
+    const settingsIntro = document.getElementById("settingsIntro");
+    const settingsLangLabel = document.getElementById("settingsLangLabel");
+    const settingsThemeLabel = document.getElementById("settingsThemeLabel");
+    const settingsBackBtn = document.getElementById("settingsBackBtn");
 
-    const scannerTitle = document.getElementById('scannerTitle');
-    const scannerBody = document.getElementById('scannerBody');
-    const currentDenomText = document.getElementById('currentDenomText');
-    const cameraStatus = document.getElementById('cameraStatus');
+    const settingsLangEn = document.getElementById("settingsLangEn");
+    const settingsLangEs = document.getElementById("settingsLangEs");
+    const themeLightBtn = document.getElementById("themeLightBtn");
+    const themeDarkBtn = document.getElementById("themeDarkBtn");
 
-    const captureBtn = document.getElementById('captureBtn');
-    const retakeBtn = document.getElementById('retakeBtn');
-    const beginChecksBtn = document.getElementById('beginChecksBtn');
-    const scannerBackBtn = document.getElementById('scannerBackBtn');
+    const scannerTitle = document.getElementById("scannerTitle");
+    const scannerBody = document.getElementById("scannerBody");
+    const currentDenomText = document.getElementById("currentDenomText");
+    const cameraStatus = document.getElementById("cameraStatus");
 
-    const stepIndicator = document.getElementById('stepIndicator');
-    const stepTitle = document.getElementById('stepTitle');
-    const stepBody = document.getElementById('stepBody');
-    const btnYes = document.getElementById('btnYes');
-    const btnMaybe = document.getElementById('btnMaybe');
-    const btnNo = document.getElementById('btnNo');
+    const captureBtn = document.getElementById("captureBtn");
+    const retakeBtn = document.getElementById("retakeBtn");
+    const beginChecksBtn = document.getElementById("beginChecksBtn");
+    const scannerBackBtn = document.getElementById("scannerBackBtn");
 
-    const resultTag = document.getElementById('resultTag');
-    const resultSummary = document.getElementById('resultSummary');
-    const resultDisclaimer = document.getElementById('resultDisclaimer');
-    const restartBtn = document.getElementById('restartBtn');
+    const stepIndicator = document.getElementById("stepIndicator");
+    const stepTitle = document.getElementById("stepTitle");
+    const stepBody = document.getElementById("stepBody");
+    const btnYes = document.getElementById("btnYes");
+    const btnMaybe = document.getElementById("btnMaybe");
+    const btnNo = document.getElementById("btnNo");
 
-    const langEn = document.getElementById('langEn');
-    const langEs = document.getElementById('langEs');
+    const resultTag = document.getElementById("resultTag");
+    const resultSummary = document.getElementById("resultSummary");
+    const resultDisclaimer = document.getElementById("resultDisclaimer");
+    const restartBtn = document.getElementById("restartBtn");
 
-    const denomRow = document.getElementById('denomRow');
+    const langEn = document.getElementById("langEn");
+    const langEs = document.getElementById("langEs");
 
-    const video = document.getElementById('video');
-    const captureCanvas = document.getElementById('captureCanvas');
-    const frameOverlay = document.getElementById('frameOverlay');
+    const denomRow = document.getElementById("denomRow");
 
-    const answerButtons = document.querySelectorAll('.answer-btn');
+    const video = document.getElementById("video");
+    const captureCanvas = document.getElementById("captureCanvas");
+    const frameOverlay = document.getElementById("frameOverlay");
 
-    let stream = null;
-    let currentStepIndex = 0;
-    let steps = i18n[state.lang].steps(state.denom);
-    const answers = [];
+    const answerButtons = document.querySelectorAll(".answer-btn");
 
-    // ---- helpers ----
+    const myScansTitle = document.getElementById("myScansTitle");
+    const myScansSummary = document.getElementById("myScansSummary");
+    const scanList = document.getElementById("scanList");
+    const backFromMyScansBtn = document.getElementById("backFromMyScansBtn");
+    const clearScansBtn = document.getElementById("clearScansBtn");
+
+    const resultsFeatures = document.getElementById("resultsFeatures");
+    const resultsFeaturesTitle = document.getElementById("resultsFeaturesTitle");
+    const resultsFeaturesSub = document.getElementById("resultsFeaturesSub");
+    const resultsFeaturesList = document.getElementById("resultsFeaturesList");
+
+    // ---- Section helpers ----
     function showSection(section) {
-      homeSection.classList.remove('active');
-      settingsSection.classList.remove('active');
-      scannerSection.classList.remove('active');
-      checklistSection.classList.remove('active');
-      resultsSection.classList.remove('active');
+      [homeSection, settingsSection, scannerSection, checklistSection, resultsSection, myScansSection]
+        .forEach(sec => sec.classList.remove("active"));
+      if (section) section.classList.add("active");
+    }
 
-      if (section) section.classList.add('active');
+    // ---- Lang & theme ----
+    function updateLangToggleUI() {
+      if (state.lang === "en") {
+        langEn.classList.add("active");
+        langEs.classList.remove("active");
+        settingsLangEn.classList.add("active");
+        settingsLangEs.classList.remove("active");
+      } else {
+        langEs.classList.add("active");
+        langEn.classList.remove("active");
+        settingsLangEs.classList.add("active");
+        settingsLangEn.classList.remove("active");
+      }
+    }
+
+    function applyTheme() {
+      if (state.theme === "light") {
+        bodyEl.classList.remove("theme-dark");
+        bodyEl.classList.add("theme-light");
+        themeLightBtn.classList.add("active");
+        themeDarkBtn.classList.remove("active");
+      } else {
+        bodyEl.classList.remove("theme-light");
+        bodyEl.classList.add("theme-dark");
+        themeDarkBtn.classList.add("active");
+        themeLightBtn.classList.remove("active");
+      }
     }
 
     function applyLanguage() {
@@ -869,6 +1156,7 @@
       denomLabel.textContent = t.denomLabel;
       intlComingSoon.textContent = t.intlComingSoon;
       startScanBtn.textContent = t.startScanBtn;
+      openMyScansBtn.textContent = t.myScansBtn;
       openSettingsBtn.textContent = t.settingsBtn;
 
       scannerTitle.textContent = t.scannerTitle;
@@ -880,9 +1168,6 @@
       retakeBtn.textContent = t.retakeBtn;
       beginChecksBtn.textContent = t.beginChecksBtn;
 
-      stepIndicator.textContent = t.stepIndicator(currentStepIndex, steps.length);
-      stepTitle.textContent = steps[currentStepIndex].title;
-      stepBody.textContent = steps[currentStepIndex].body;
       btnYes.textContent = t.btnYes;
       btnMaybe.textContent = t.btnMaybe;
       btnNo.textContent = t.btnNo;
@@ -895,70 +1180,52 @@
       settingsLangLabel.textContent = t.settingsLangLabel;
       settingsThemeLabel.textContent = t.settingsThemeLabel;
       settingsBackBtn.textContent = t.settingsBack;
-
       settingsLangEn.textContent = t.langFullEn;
       settingsLangEs.textContent = t.langFullEs;
       themeLightBtn.textContent = t.themeLight;
       themeDarkBtn.textContent = t.themeDark;
-    }
 
-    function updateLangToggleUI() {
-      if (state.lang === 'en') {
-        langEn.classList.add('active');
-        langEs.classList.remove('active');
-        settingsLangEn.classList.add('active');
-        settingsLangEs.classList.remove('active');
-      } else {
-        langEs.classList.add('active');
-        langEn.classList.remove('active');
-        settingsLangEs.classList.add('active');
-        settingsLangEn.classList.remove('active');
-      }
+      myScansTitle.textContent = t.myScansTitle;
+      clearScansBtn.textContent = t.clearScansLabel;
+      backFromMyScansBtn.textContent = t.backFromMyScans;
+
+      resultsFeaturesTitle.textContent = t.resultsFeaturesTitle;
+      resultsFeaturesSub.textContent = t.resultsFeaturesSub;
+
+      steps = t.steps(state.denom);
+      showStep(currentStepIndex);
+      updateMyScansUI();
     }
 
     function updateDenomButtons() {
-      const buttons = denomRow.querySelectorAll('.denom-btn');
+      const buttons = denomRow.querySelectorAll(".denom-btn");
       buttons.forEach(btn => {
-        const val = parseInt(btn.getAttribute('data-denom'), 10);
-        if (val === state.denom) btn.classList.add('active');
-        else btn.classList.remove('active');
+        const val = parseInt(btn.getAttribute("data-denom"), 10);
+        btn.classList.toggle("active", val === state.denom);
       });
       const t = i18n[state.lang];
       currentDenomText.textContent = t.currentDenomText(state.denom);
       steps = t.steps(state.denom);
     }
 
-    function applyTheme() {
-      if (state.theme === 'light') {
-        bodyEl.classList.remove('theme-dark');
-        bodyEl.classList.add('theme-light');
-        themeLightBtn.classList.add('active');
-        themeDarkBtn.classList.remove('active');
-      } else {
-        bodyEl.classList.remove('theme-light');
-        bodyEl.classList.add('theme-dark');
-        themeDarkBtn.classList.add('active');
-        themeLightBtn.classList.remove('active');
-      }
-    }
-
+    // ---- Camera & capture ----
     async function startCamera() {
       const t = i18n[state.lang];
       if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         cameraStatus.textContent = t.cameraError;
-        console.warn('getUserMedia not supported');
         return;
       }
       cameraStatus.textContent = t.cameraOpening;
+
       try {
         stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' },
+          video: { facingMode: "environment" },
           audio: false
         });
         video.srcObject = stream;
         cameraStatus.textContent = t.cameraAlign;
       } catch (err) {
-        console.error('Camera error', err);
+        console.error("Camera error", err);
         cameraStatus.textContent = t.cameraError;
       }
     }
@@ -971,11 +1238,11 @@
     }
 
     function drawOverlays() {
-      const ctx = captureCanvas.getContext('2d');
+      const ctx = captureCanvas.getContext("2d");
       const w = captureCanvas.width;
       const h = captureCanvas.height;
 
-      ctx.strokeStyle = 'rgba(56,189,248,0.9)';
+      ctx.strokeStyle = "rgba(56,189,248,0.9)";
       ctx.lineWidth = Math.max(2, w * 0.003);
 
       const wmX = w * 0.07;
@@ -997,138 +1264,407 @@
       ctx.strokeRect(csX, csY, csW, csH);
     }
 
-    function captureFrame() {
+    function canvasToBase64JPEG(canvas, quality = 0.85) {
+      const dataUrl = canvas.toDataURL("image/jpeg", quality);
+      const idx = dataUrl.indexOf(",");
+      return idx >= 0 ? dataUrl.slice(idx + 1) : dataUrl;
+    }
+
+    function makeThumbnailBase64() {
+      const width = captureCanvas.width;
+      const height = captureCanvas.height;
+      if (!width || !height) return null;
+
+      const maxW = 320;
+      const scale = maxW / width;
+      const thumbW = maxW;
+      const thumbH = Math.round(height * scale);
+
+      const thumbCanvas = document.createElement("canvas");
+      thumbCanvas.width = thumbW;
+      thumbCanvas.height = thumbH;
+      const ctx = thumbCanvas.getContext("2d");
+      ctx.drawImage(captureCanvas, 0, 0, thumbW, thumbH);
+
+      return canvasToBase64JPEG(thumbCanvas, 0.8);
+    }
+
+    async function captureFrame() {
       const t = i18n[state.lang];
       const width = video.videoWidth;
       const height = video.videoHeight;
 
       if (!width || !height) {
         cameraStatus.textContent = t.cameraNotReady;
-        console.warn('Video not ready for capture');
+        console.warn("Video not ready for capture");
         return;
       }
 
       captureCanvas.width = width;
       captureCanvas.height = height;
-
-      const ctx = captureCanvas.getContext('2d');
+      const ctx = captureCanvas.getContext("2d");
       ctx.drawImage(video, 0, 0, width, height);
 
-      video.style.display = 'none';
-      captureCanvas.style.display = 'block';
-      frameOverlay.style.display = 'none';
+      video.style.display = "none";
+      captureCanvas.style.display = "block";
+      frameOverlay.style.display = "none";
 
       drawOverlays();
 
-      cameraStatus.textContent = t.cameraCaptured;
-      captureBtn.style.display = 'none';
-      retakeBtn.style.display = 'inline-flex';
-      beginChecksBtn.style.display = 'inline-flex';
+      lastCaptureThumbBase64 = makeThumbnailBase64();
 
-      // Exit full-screen scanning-only mode and return to card layout
-      appRoot.classList.remove('scanning-full');
+      cameraStatus.textContent = t.cameraCaptured;
+      captureBtn.style.display = "none";
+      retakeBtn.style.display = "inline-flex";
+      beginChecksBtn.style.display = "inline-flex";
+
+      if (appRoot && appRoot.classList) {
+        appRoot.classList.remove("scanning-full");
+      }
+
+      // Kick off AI analysis
+      await analyzeWithAI();
     }
 
     function resetScannerView() {
       const t = i18n[state.lang];
-      video.style.display = 'block';
-      captureCanvas.style.display = 'none';
-      frameOverlay.style.display = 'flex';
-      captureBtn.style.display = 'inline-flex';
-      retakeBtn.style.display = 'none';
-      beginChecksBtn.style.display = 'none';
+      video.style.display = "block";
+      captureCanvas.style.display = "none";
+      frameOverlay.style.display = "flex";
+      captureBtn.style.display = "inline-flex";
+      retakeBtn.style.display = "none";
+      beginChecksBtn.style.display = "none";
       cameraStatus.textContent = t.cameraAlign;
+      lastAnalysis = null;
+      lastCaptureThumbBase64 = null;
     }
 
+    // ---- AI call ----
+    async function analyzeWithAI() {
+      const t = i18n[state.lang];
+      if (!ANALYZE_API_URL) {
+        cameraStatus.textContent = t.analyzeFailed;
+        return;
+      }
+
+      try {
+        isAnalyzing = true;
+        cameraStatus.textContent = t.analyzing;
+
+        const image_base64 = canvasToBase64JPEG(captureCanvas, 0.9);
+
+        const payload = {
+          image_base64,
+          currency: "USD",
+          denomination: state.denom,
+          side: "front",
+          app_version: "1.0.0",
+          device_info: {
+            platform: "web",
+            user_agent: navigator.userAgent
+          }
+        };
+
+        const res = await fetch(ANALYZE_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+          throw new Error("API " + res.status);
+        }
+
+        lastAnalysis = await res.json();
+        cameraStatus.textContent = t.analyzeDone;
+
+        // Save scan record locally
+        saveScanRecord();
+      } catch (err) {
+        console.error("Error calling analyze-note:", err);
+        cameraStatus.textContent = t.analyzeFailed;
+      } finally {
+        isAnalyzing = false;
+      }
+    }
+
+    // ---- Checklist / results ----
     function showStep(index) {
       const t = i18n[state.lang];
+      if (!steps.length) steps = t.steps(state.denom);
       currentStepIndex = index;
       stepIndicator.textContent = t.stepIndicator(index, steps.length);
       stepTitle.textContent = steps[index].title;
       stepBody.textContent = steps[index].body;
     }
 
-    function computeResult() {
-      const t = i18n[state.lang];
-      let score = 0;
-      let hasNo = false;
-      let allMaybe = true;
-
-      for (const a of answers) {
-        if (a === 'yes') {
-          score += 2;
-          allMaybe = false;
-        } else if (a === 'maybe') {
-          score += 1;
-        } else if (a === 'no') {
-          hasNo = true;
-          allMaybe = false;
-        }
+    function applyAIResultToUI() {
+      if (!lastAnalysis) {
+        resultsFeatures.style.display = "none";
+        return;
       }
+
+      const t = i18n[state.lang];
+      const band = lastAnalysis.decision_band;
+      const score = lastAnalysis.authenticity_score;
 
       let tagText, tagClass, summary;
 
-      if (hasNo && score <= 2) {
-        tagText = t.resultSuspicious;
-        tagClass = 'bad';
-        summary = t.resultSuspiciousText;
-      } else if (allMaybe || score <= 2) {
-        tagText = t.resultInconclusive;
-        tagClass = 'warn';
-        summary = t.resultInconclusiveText;
-      } else {
+      if (band === "likely_genuine") {
         tagText = t.resultLikely;
-        tagClass = 'ok';
-        summary = t.resultLikelyText;
+        tagClass = "ok";
+        summary =
+          t.resultLikelyText +
+          ` (AI score: ${(score * 100).toFixed(1)}% likelihood of genuine behavior.)`;
+      } else if (band === "suspicious") {
+        tagText = t.resultSuspicious;
+        tagClass = "bad";
+        summary =
+          t.resultSuspiciousText +
+          ` (AI score: ${(score * 100).toFixed(1)}% – treat as high risk.)`;
+      } else {
+        tagText = t.resultInconclusive;
+        tagClass = "warn";
+        summary =
+          t.resultInconclusiveText +
+          ` (AI score: ${(score * 100).toFixed(1)}% – unclear due to conditions.)`;
       }
 
       resultTag.className = `result-tag ${tagClass}`;
       resultTag.textContent = tagText;
       resultSummary.textContent = summary;
+
+      const feats = lastAnalysis.features;
+      if (!feats) {
+        resultsFeatures.style.display = "none";
+        return;
+      }
+
+      const labelMap = {
+        layout_consistency: state.lang === "es" ? "Diseño general" : "Layout consistency",
+        watermark: state.lang === "es" ? "Marca de agua" : "Watermark",
+        security_thread: state.lang === "es" ? "Hilo de seguridad" : "Security thread",
+        print_texture: state.lang === "es" ? "Textura de impresión" : "Print texture",
+        corner_denomination:
+          state.lang === "es" ? "Valor en esquinas" : "Corner denomination",
+      };
+
+      const order = [
+        "layout_consistency",
+        "watermark",
+        "security_thread",
+        "print_texture",
+        "corner_denomination",
+      ];
+
+      resultsFeaturesList.innerHTML = "";
+
+      order.forEach((key) => {
+        const f = feats[key];
+        if (!f) return;
+
+        const row = document.createElement("div");
+        row.className = "feature-row";
+
+        const label = document.createElement("div");
+        label.className = "feature-label";
+        label.textContent = labelMap[key] || key;
+
+        const right = document.createElement("div");
+        right.className = "feature-right";
+
+        const scoreEl = document.createElement("div");
+        scoreEl.className = "feature-score";
+        scoreEl.textContent = (f.score * 100).toFixed(0) + "%";
+
+        const pill = document.createElement("div");
+        pill.className = `feature-status-pill ${f.status}`;
+        pill.textContent =
+          f.status === "ok"
+            ? (state.lang === "es" ? "OK" : "OK")
+            : f.status === "warn"
+            ? (state.lang === "es" ? "Atención" : "Check")
+            : state.lang === "es"
+            ? "Falla"
+            : "Fail";
+
+        right.appendChild(scoreEl);
+        right.appendChild(pill);
+
+        row.appendChild(label);
+        row.appendChild(right);
+
+        resultsFeaturesList.appendChild(row);
+      });
+
+      resultsFeatures.style.display = "block";
     }
 
-    // ---- events ----
-    langEn.addEventListener('click', () => {
-      state.lang = 'en';
+    // ---- My Scans storage ----
+    function loadScansFromStorage() {
+      try {
+        const raw = localStorage.getItem(SCANS_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) {
+          scans = parsed;
+        }
+      } catch (e) {
+        console.warn("Failed to load scans", e);
+      }
+    }
+
+    function saveScansToStorage() {
+      try {
+        localStorage.setItem(SCANS_STORAGE_KEY, JSON.stringify(scans));
+      } catch (e) {
+        console.warn("Failed to save scans", e);
+      }
+    }
+
+    function saveScanRecord() {
+      if (!lastAnalysis || !lastAnalysis.decision_band) return;
+      const now = new Date();
+      const iso = now.toISOString();
+
+      const record = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        timestamp: iso,
+        currency: lastAnalysis.currency || "USD",
+        denomination: lastAnalysis.denomination || state.denom,
+        side: lastAnalysis.side || "front",
+        decision_band: lastAnalysis.decision_band,
+        authenticity_score: lastAnalysis.authenticity_score,
+        image_thumb_base64: lastCaptureThumbBase64 || null
+      };
+
+      scans.unshift(record);
+      // Hard cap to avoid bloating storage
+      if (scans.length > 100) scans = scans.slice(0, 100);
+
+      saveScansToStorage();
+      updateMyScansUI();
+    }
+
+    function formatTimestamp(ts) {
+      const d = new Date(ts);
+      if (Number.isNaN(d.getTime())) return ts;
+      return d.toLocaleString();
+    }
+
+    function updateMyScansUI() {
+      const t = i18n[state.lang];
+      const count = scans.length;
+
+      if (count === 0) {
+        myScansSummary.textContent =
+          state.lang === "es" ? t.myScansEmpty : t.myScansEmpty;
+        scanList.innerHTML = "";
+        return;
+      }
+
+      myScansSummary.textContent = t.myScansSummary(count);
+
+      scanList.innerHTML = "";
+      scans.forEach((scan) => {
+        const card = document.createElement("div");
+        card.className = "scan-card";
+
+        const thumb = document.createElement("div");
+        thumb.className = "scan-thumb";
+        if (scan.image_thumb_base64) {
+          const img = document.createElement("img");
+          img.src = "data:image/jpeg;base64," + scan.image_thumb_base64;
+          thumb.appendChild(img);
+        }
+
+        const meta = document.createElement("div");
+        meta.className = "scan-meta";
+
+        const line1 = document.createElement("div");
+        line1.className = "scan-line-primary";
+
+        const leftText = document.createElement("span");
+        leftText.textContent = `$${scan.denomination} • ${scan.currency}`;
+
+        const tag = document.createElement("span");
+        const band = scan.decision_band;
+        let tagClass = "warn";
+        let tagLabel = band;
+        if (band === "likely_genuine") {
+          tagClass = "ok";
+          tagLabel = state.lang === "es" ? "Prob. auténtico" : "Likely";
+        } else if (band === "suspicious") {
+          tagClass = "bad";
+          tagLabel = state.lang === "es" ? "Sospechoso" : "Suspicious";
+        } else {
+          tagClass = "warn";
+          tagLabel = state.lang === "es" ? "Inconcluso" : "Inconclusive";
+        }
+        tag.className = "scan-tag " + tagClass;
+        tag.textContent = tagLabel;
+
+        line1.appendChild(leftText);
+        line1.appendChild(tag);
+
+        const line2 = document.createElement("div");
+        line2.className = "scan-line-secondary";
+        const score = scan.authenticity_score;
+        const percent = typeof score === "number" ? (score * 100).toFixed(0) + "%" : "--";
+        line2.textContent = `${formatTimestamp(scan.timestamp)} • AI score: ${percent}`;
+
+        meta.appendChild(line1);
+        meta.appendChild(line2);
+
+        card.appendChild(thumb);
+        card.appendChild(meta);
+
+        scanList.appendChild(card);
+      });
+    }
+
+    // ---- Events ----
+    langEn.addEventListener("click", () => {
+      state.lang = "en";
       steps = i18n[state.lang].steps(state.denom);
       updateLangToggleUI();
       applyLanguage();
     });
 
-    langEs.addEventListener('click', () => {
-      state.lang = 'es';
+    langEs.addEventListener("click", () => {
+      state.lang = "es";
       steps = i18n[state.lang].steps(state.denom);
       updateLangToggleUI();
       applyLanguage();
     });
 
-    settingsLangEn.addEventListener('click', () => {
-      state.lang = 'en';
+    settingsLangEn.addEventListener("click", () => {
+      state.lang = "en";
       steps = i18n[state.lang].steps(state.denom);
       updateLangToggleUI();
       applyLanguage();
     });
 
-    settingsLangEs.addEventListener('click', () => {
-      state.lang = 'es';
+    settingsLangEs.addEventListener("click", () => {
+      state.lang = "es";
       steps = i18n[state.lang].steps(state.denom);
       updateLangToggleUI();
       applyLanguage();
     });
 
-    themeLightBtn.addEventListener('click', () => {
-      state.theme = 'light';
+    themeLightBtn.addEventListener("click", () => {
+      state.theme = "light";
       applyTheme();
     });
 
-    themeDarkBtn.addEventListener('click', () => {
-      state.theme = 'dark';
+    themeDarkBtn.addEventListener("click", () => {
+      state.theme = "dark";
       applyTheme();
     });
 
-    denomRow.addEventListener('click', e => {
-      if (!e.target.classList.contains('denom-btn')) return;
-      const denom = parseInt(e.target.getAttribute('data-denom'), 10);
+    denomRow.addEventListener("click", e => {
+      if (!e.target.classList.contains("denom-btn")) return;
+      const denom = parseInt(e.target.getAttribute("data-denom"), 10);
       if (!Number.isNaN(denom)) {
         state.denom = denom;
         updateDenomButtons();
@@ -1137,75 +1673,92 @@
       }
     });
 
-    openSettingsBtn.addEventListener('click', () => {
+    openSettingsBtn.addEventListener("click", () => {
       showSection(settingsSection);
     });
 
-    settingsBackBtn.addEventListener('click', () => {
+    settingsBackBtn.addEventListener("click", () => {
       showSection(homeSection);
     });
 
-    startScanBtn.addEventListener('click', () => {
-      answers.length = 0;
+    openMyScansBtn.addEventListener("click", () => {
+      updateMyScansUI();
+      showSection(myScansSection);
+    });
+
+    backFromMyScansBtn.addEventListener("click", () => {
+      showSection(homeSection);
+    });
+
+    clearScansBtn.addEventListener("click", () => {
+      if (!confirm("Clear all saved scans on this device?")) return;
+      scans = [];
+      saveScansToStorage();
+      updateMyScansUI();
+    });
+
+    startScanBtn.addEventListener("click", () => {
+      answers = [];
       currentStepIndex = 0;
       updateDenomButtons();
       showStep(0);
       showSection(scannerSection);
       resetScannerView();
       applyLanguage();
-      appRoot.classList.add('scanning-full'); // enter fullscreen scanning-only mode
+      appRoot.classList.add("scanning-full");
       startCamera();
     });
 
-    scannerBackBtn.addEventListener('click', () => {
+    scannerBackBtn.addEventListener("click", () => {
       stopCamera();
-      appRoot.classList.remove('scanning-full');
+      appRoot.classList.remove("scanning-full");
       showSection(homeSection);
     });
 
-    captureBtn.addEventListener('click', captureFrame);
+    captureBtn.addEventListener("click", captureFrame);
 
-    retakeBtn.addEventListener('click', () => {
+    retakeBtn.addEventListener("click", () => {
       resetScannerView();
       applyLanguage();
-      appRoot.classList.add('scanning-full');
+      appRoot.classList.add("scanning-full");
       startCamera();
     });
 
-    beginChecksBtn.addEventListener('click', () => {
+    beginChecksBtn.addEventListener("click", () => {
       stopCamera();
-      showSection(checklistSection);
-      steps = i18n[state.lang].steps(state.denom);
-      currentStepIndex = 0;
-      showStep(0);
+      applyAIResultToUI();
+      showSection(resultsSection);
     });
 
     answerButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const answer = btn.getAttribute('data-answer');
+      btn.addEventListener("click", () => {
+        const answer = btn.getAttribute("data-answer");
         answers[currentStepIndex] = answer;
 
         if (currentStepIndex < steps.length - 1) {
           showStep(currentStepIndex + 1);
         } else {
+          applyAIResultToUI();
           showSection(resultsSection);
-          computeResult();
         }
       });
     });
 
-    restartBtn.addEventListener('click', () => {
+    restartBtn.addEventListener("click", () => {
       stopCamera();
-      appRoot.classList.remove('scanning-full');
+      appRoot.classList.remove("scanning-full");
       showSection(homeSection);
     });
 
-    window.addEventListener('beforeunload', stopCamera);
+    window.addEventListener("beforeunload", stopCamera);
 
-    // ---- initial setup ----
+    // ---- Init ----
+    loadScansFromStorage();
+    updateMyScansUI();
     updateLangToggleUI();
     applyTheme();
     updateDenomButtons();
+    steps = i18n[state.lang].steps(state.denom);
     showStep(0);
     applyLanguage();
     showSection(homeSection);
